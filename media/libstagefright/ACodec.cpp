@@ -2790,7 +2790,12 @@ status_t ACodec::setupAVCEncoderParameters(const sp<AMessage> &msg) {
         if (err != OK) {
             ALOGE("Setting intra macroblock refresh mode (%d) failed: 0x%x",
                     err, intraRefreshMode);
+#ifndef NEEDS_HW_Encoder_FIX
+            ALOGE("But skipping this error message as wanted...");
+            //return err;
+#else
             return err;
+#endif
         }
     }
 
