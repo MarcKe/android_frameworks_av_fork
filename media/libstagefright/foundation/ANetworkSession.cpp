@@ -1219,6 +1219,11 @@ status_t ANetworkSession::sendRequest(
 
     interrupt();
 
+#ifdef WFD_DEBUG
+    ALOGD("sendRequest() session[%d] result[%d] -->", sessionID, err);
+    ALOGD("[%s]", (char*)data);
+#endif
+
     return err;
 }
 
