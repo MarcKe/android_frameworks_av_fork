@@ -30,6 +30,9 @@ LOCAL_SHARED_LIBRARIES:= \
         libui                           \
         libutils                        \
 
+ifeq ($(BOARD_HAS_NO_HDCP_SUPPORT), true)
+LOCAL_CFLAGS += -DDEVICE_HAS_NO_HDCP_SUPPORT
+
 LOCAL_MODULE:= libstagefright_wfd
 
 LOCAL_MODULE_TAGS:= optional
