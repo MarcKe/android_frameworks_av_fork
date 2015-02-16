@@ -585,7 +585,9 @@ status_t WifiDisplaySource::sendM1(int32_t sessionID) {
 
 status_t WifiDisplaySource::sendM3(int32_t sessionID) {
     AString body =
+#ifndef DEVICE_HAS_NO_HDCP_SUPPORT
         "wfd_content_protection\r\n"
+#endif
         "wfd_video_formats\r\n"
         "wfd_audio_codecs\r\n"
         "wfd_client_rtp_ports\r\n";
@@ -1052,6 +1054,11 @@ status_t WifiDisplaySource::onReceiveClientData(const sp<AMessage> &msg) {
     AString method;
     AString uri;
     data->getRequestField(0, &method);
+
+#ifdef WFD_DEBUG
+    ALOGI("onReceiveClientData() session[%d] method[%s]  <== ", sessionID, method.c_str());
+    ALOGI("[%s]", data->debugString().c_str());
+#endif
 
     int32_t cseq;
     if (!data->findInt32("cseq", &cseq)) {
